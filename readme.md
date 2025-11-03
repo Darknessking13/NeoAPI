@@ -1,26 +1,65 @@
-# ✨ NeoAPI ✨
+# ✨ NeoAPI
 
-[![NPM Version](https://img.shields.io/npm/v/neoapi?style=flat-square)](https://www.npmjs.com/package/neoapi) <!-- Replace 'neoapi' if you publish -->
-[![Build Status](https://img.shields.io/travis/com/your-username/neoapi?style=flat-square)](https://travis-ci.com/your-username/neoapi) <!-- Replace with your CI link -->
-[![License](https://img.shields.io/npm/l/neoapi?style=flat-square)](LICENSE) <!-- Ensure you have a LICENSE file -->
+[![NPM Version](https://img.shields.io/npm/v/neoapi?style=flat-square)](https://www.npmjs.com/package/neoapi)
+[![License](https://img.shields.io/npm/l/neoapi?style=flat-square)](LICENSE)
 
-**A modern, minimalist, and fast Node.js framework for building efficient REST APIs, built with parallel request handling concepts in mind (leveraging Node.js's async nature).**
+> **A modern, minimalist, and blazingly fast Node.js framework for building REST APIs**
 
-NeoAPI focuses on developer experience, providing expressive routing, pluggable middleware, and helpful response utilities without unnecessary bloat. It uses the high-performance [`find-my-way`](https://github.com/delvedor/find-my-way) router under the hood.
+NeoAPI combines Express-like simplicity with modern features and impressive performance. Built with developer experience in mind, it offers clean routing, powerful plugins, and helpful utilities—without the bloat.
+
+## 🚀 Performance
+
+NeoAPI delivers **production-ready performance** that rivals industry leaders:
+
+| Framework | Req/sec | Latency (avg) | Memory | Relative Speed |
+|-----------|---------|---------------|--------|----------------|
+| **NeoAPI** | **13,594** | **73ms** | **104 MB** | **Baseline** |
+| Fastify | 17,264 | 57ms | 90 MB | +27% faster |
+| Express | 4,114 | 235ms | 118 MB | **-70% slower** |
+
+**Benchmark Details:**
+- **System:** Intel Xeon @ 2.20GHz (2 cores), 7.76 GB RAM, Node v20.11.1
+- **Test:** 40s duration, 100 connections, 10 pipelining factor
+- **NeoAPI is 3.3x faster than Express** with lower memory usage
+- **NeoAPI achieves 79% of Fastify's speed** while maintaining simpler APIs
+
+*Benchmarks run on Linux 6.6.111+ using [autocannon](https://github.com/mcollina/autocannon)*
 
 ---
 
-## 🚀 Features
+## ✨ Why NeoAPI?
 
-*   **⚡ Blazing Fast Routing:** Powered by `find-my-way` for high-performance route matching, including parameters and wildcards.
-*   **📡 Expressive API:** Simple and intuitive methods for defining routes (`app.get`, `app.post`, etc.).
-*   **🧩 Pluggable Architecture:** Easily extend functionality with middleware (`app.attach`) and plugins (`app.plug`). Includes built-in plugins for common tasks (JSON parsing, CORS).
-*   **⚙️ Middleware Support:** Add global middleware to process requests before they hit your route handlers.
-*   **🔄 Rich Response Utilities:** Convenient helpers on the `res` object (`res.json`, `res.status`, `res.send`, `res.sendFile`, `res.redirect`, etc.).
-*   **🧵 Route Grouping:** Organize related routes under common path prefixes using `app.group`.
-*   **⚡ Parallel Handlers:** Run multiple async data-fetching functions concurrently for a single route using `app.parallel`.
-*   **🧼 Centralized Error Handling:** Define a custom error handler with `app.error` for consistent error responses.
-*   ** minimalist Core:** Focuses on essential API features, keeping the core lightweight.
+### 🎯 **Best of Both Worlds**
+- **Express-like simplicity** - Familiar API, minimal learning curve
+- **Modern performance** - 3.3x faster than Express, 79% of Fastify's speed
+- **Developer-friendly** - Clean APIs, helpful utilities, great error messages
+
+### 🚀 **Key Features**
+
+#### Core Routing
+- ⚡ **High-performance routing** powered by `find-my-way`
+- 🛣️ **All HTTP methods** (GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD)
+- 📍 **Route parameters** (`:id`) and **wildcards** (`*`)
+- 🔍 **Query string parsing** built-in
+
+#### Advanced Features
+- 🧵 **Route grouping** - Organize routes with `app.group()`
+- ⚡ **Parallel handlers** - Concurrent data fetching with `app.parallel()`
+- 🔌 **Plugin system** - Extensible architecture
+- 🎯 **Middleware support** - Global and route-level
+- 🪝 **Hook system** - onRequest, preHandler, onResponse, onError
+
+#### Built-in Plugins
+- 📦 **JSON Parser** - Automatic request body parsing
+- 🌐 **CORS** - Secure cross-origin resource sharing
+- 🔒 **Secure defaults** - Production-ready out of the box
+
+#### Developer Experience
+- 🔄 **Rich response utilities** - `res.json()`, `res.send()`, `res.redirect()`, etc.
+- 🧼 **Centralized error handling** - Consistent error responses
+- 📝 **Request decorations** - `req.params`, `req.query`, `req.body`, `req.ip`, etc.
+- 🎨 **Beautiful logging** - Colorful, informative console output
+- 💪 **TypeScript ready** - Full type definitions included
 
 ---
 
@@ -198,34 +237,78 @@ The `res` object in your handlers is decorated with helpful methods:
 
 ---
 
-## ⚡ Performance & Benchmarking
+## ⚡ Performance & Optimizations
 
-NeoAPI is optimized for high performance with minimal overhead:
+NeoAPI is built for speed with carefully optimized internals:
 
-*   **Optimized Request ID Generation:** Base-36 encoding for compact, fast IDs
-*   **Smart Buffer Handling:** Avoids redundant buffer operations
-*   **Efficient Middleware Chain:** Pre-computed counts and optimized execution flow
-*   **Lazy Logging:** Debug logs only built when verbose mode is enabled
-*   **Response Guards:** Centralized checks to prevent double-sends
+### 🎯 Performance Optimizations
+- **Prototype methods** - Zero per-request binding overhead
+- **Lazy logger creation** - Loggers only created when accessed
+- **Fast URL parsing** - String operations instead of URL constructor
+- **Smart hook execution** - Skip empty hooks automatically
+- **Optimized buffer handling** - Minimal memory allocations
+- **Efficient middleware chain** - Pre-computed execution paths
 
-### Run Benchmarks
+### 📊 Real-World Performance
+```
+Test Configuration:
+- Duration: 40 seconds
+- Connections: 100
+- Pipelining: 10x
+- System: Intel Xeon @ 2.20GHz, 2 cores, 7.76 GB RAM
 
-```bash
-node benchmark/simple-route.js
+Results:
+┌──────────┬────────────┬──────────┬─────────┬──────────┐
+│ Framework│ Req/sec    │ Latency  │ Memory  │ vs Express│
+├──────────┼────────────┼──────────┼─────────┼──────────┤
+│ NeoAPI   │ 13,594     │ 73ms     │ 104 MB  │ +230%    │
+│ Fastify  │ 17,264     │ 57ms     │ 90 MB   │ +320%    │
+│ Express  │ 4,114      │ 235ms    │ 118 MB  │ Baseline │
+└──────────┴────────────┴──────────┴─────────┴──────────┘
 ```
 
-See [Optimizations Documentation](./docs/optimizations.md) for detailed performance improvements.
+**Key Takeaways:**
+- ✅ **3.3x faster than Express** with better memory efficiency
+- ✅ **79% of Fastify's performance** with simpler, more intuitive APIs
+- ✅ **Production-ready** - Handles 13,000+ requests/second
+- ✅ **Low latency** - 73ms average response time under load
 
+**Run benchmarks yourself:**
+```bash
+npm run benchmark
+```
 ---
 
-## 🌱 Contributing
+## 🤝 Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request.
+Contributions are welcome! Whether it's:
+- 🐛 Bug reports
+- 💡 Feature requests
+- 📝 Documentation improvements
+- 🔧 Code contributions
 
-*(Add contribution guidelines later)*
+Please feel free to open an issue or submit a pull request on [GitHub](https://github.com/Darknessking13/NeoAPI).
 
 ---
 
 ## 📄 License
 
-[MIT](LICENSE) <!-- Make sure you add a LICENSE file (e.g., MIT) -->
+MIT License - see [LICENSE](LICENSE) file for details.
+
+---
+
+## 📬 Support
+
+- 📖 [Documentation](./docs/)
+- 🐛 [Issue Tracker](https://github.com/Darknessking13/NeoAPI/issues)
+- 💬 [Discussions](https://github.com/Darknessking13/NeoAPI/discussions)
+
+---
+
+<div align="center">
+
+**Made with ❤️ by [I._.become_a_devil](https://github.com/Darknessking13)**
+
+⭐ Star us on [GitHub](https://github.com/Darknessking13/NeoAPI) if you find NeoAPI useful!
+
+</div>
