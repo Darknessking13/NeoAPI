@@ -2,7 +2,6 @@
 
 [![NPM Version](https://img.shields.io/npm/v/zyroapi?style=flat-square)](https://www.npmjs.com/package/zyroapi)
 [![License](https://img.shields.io/npm/l/zyroapi?style=flat-square)](LICENSE)
-[![Node Version](https://img.shields.io/node/v/zyroapi?style=flat-square)](https://nodejs.org)
 
 > **A modern, minimalist, and blazingly fast Node.js framework for building REST APIs**
 
