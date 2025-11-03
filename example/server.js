@@ -1,6 +1,6 @@
 // server.js - Demonstrating express-session and timing-safe CSRF with Response Header
 
-const { NeoAPI } = require('neoapi'); // Assuming 'neoapi' installed/linked
+const { ZyroAPI } = require('zyroapi'); // Assuming 'zyroapi' installed/linked
 const path = require('path');
 const session = require('express-session'); // Standard express-session
 const bodyParser = require('body-parser'); // For parsing form bodies
@@ -15,25 +15,16 @@ try {
     console.warn('Could not read version from package.json');
 }
 
-const CsrfPlugin = require('../plugins/@neoapi-csrf');
-// If developing locally:
-// const CsrfPlugin = require('./neoapi-csrf'); // Adjust path if needed
-
-// --- NeoAPI App Setup ---
-const app = new NeoAPI({ verbose: false }); // Enable verbose logging
+// --- ZyroAPI App Setup ---
+const app = new ZyroAPI({ verbose: true }); // Enable verbose logging
 const PORT = process.env.PORT || 7860; // Use environment variable or default
 
-// --- Register Plugins & Middleware ---
-// ORDER MATTERS HERE! Session -> Body Parsers -> CSRF
-
 // 1. CORS (Must allow credentials if session cookie needs cross-origin access)
-app.plug(NeoAPI.cors, {
+app.plug(ZyroAPI.cors, {
     origin: true, // Be more specific in production (e.g., 'https://yourfrontend.com')
     credentials: true // Allow cookies to be sent/received
 });
 
-// 2. Session Middleware (CRITICAL Prerequisite for CSRF)
-// Using express-session via NeoAPI's compatibility layer
 app.attach(session({
     secret: process.env.SESSION_SECRET || (() => {
         if (process.env.NODE_ENV === 'production') {
@@ -56,22 +47,14 @@ app.attach(session({
 // Parse application/x-www-form-urlencoded (standard forms)
 app.attach(bodyParser.urlencoded({ extended: false }));
 // Parse application/json (if you submit CSRF via JSON)
-app.plug(NeoAPI.jsonParser);
-
-// 4. CSRF Protection Plugin
-// Uses default options, including setting 'X-CSRF-Token' response header
-app.plug(CsrfPlugin, {
-    // Example: Override default header name if needed
-    // responseHeader: 'X-XSRF-TOKEN'
-});
-
+app.plug(ZyroAPI.jsonParser);
 
 // --- Example Routes ---
 
 app.get('/api/info', (req, res) => {
     // GET is ignored by CSRF by default, session is still available
     res.json({
-        framework: 'NeoAPI',
+        framework: 'ZyroAPI',
         version: appVersion,
         sessionId: req.sessionID // Example: Show session ID
     });

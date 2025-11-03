@@ -1,12 +1,12 @@
-// Quick test to verify NeoAPI loads correctly
-const { NeoAPI } = require('../lib/neoapi');
+// Quick test to verify ZyroAPI loads correctly
+const { ZyroAPI } = require('../lib/zyroapi');
 
-console.log('Testing NeoAPI instantiation...\n');
+console.log('Testing ZyroAPI instantiation...\n');
 
 try {
-    const app = new NeoAPI({ verbose: false });
+    const app = new ZyroAPI({ verbose: false });
     
-    console.log('✅ NeoAPI instance created');
+    console.log('✅ ZyroAPI instance created');
     console.log('✅ app.get exists:', typeof app.get === 'function');
     console.log('✅ app.post exists:', typeof app.post === 'function');
     console.log('✅ app.put exists:', typeof app.put === 'function');

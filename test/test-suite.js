@@ -1,5 +1,5 @@
-// test/test-suite.js - Comprehensive NeoAPI Test Suite
-const { NeoAPI } = require('../lib/neoapi');
+// test/test-suite.js - Comprehensive ZyroAPI Test Suite
+const { ZyroAPI } = require('../lib/zyroapi');
 const http = require('http');
 
 // Test utilities
@@ -42,18 +42,18 @@ async function makeRequest(options) {
 
 async function runTests() {
     console.log('\n╔════════════════════════════════════════════════════════╗');
-    console.log('║         NeoAPI v0.0.1-preview Test Suite              ║');
+    console.log('║         ZyroAPI v0.0.1-preview Test Suite             ║');
     console.log('╚════════════════════════════════════════════════════════╝\n');
 
-    const app = new NeoAPI({ verbose: false });
+    const app = new ZyroAPI({ verbose: false });
     const PORT = 9876;
     
     // Validate app instance
     if (!app || typeof app.get !== 'function') {
-        throw new Error('Failed to create NeoAPI instance');
+        throw new Error('Failed to create ZyroAPI instance');
     }
     if (typeof app.options !== 'function') {
-        throw new Error('app.options method is not defined. Check NeoAPI class definition.');
+        throw new Error('app.options method is not defined. Check ZyroAPI class definition.');
     }
 
     // ============================================================
@@ -115,11 +115,11 @@ async function runTests() {
     });
 
     // ============================================================
-    // TEST CATEGORY 4: Request Body (JSON)
+    // TEST CATEGORY 4: Request Body Parsing (JSON Parser Plugin)
     // ============================================================
     console.log('📍 Testing Request Body Parsing...');
 
-    app.plug(NeoAPI.jsonParser);
+    app.plug(ZyroAPI.jsonParser);
 
     app.post('/data', (req, res) => {
         res.json({ received: req.body });
@@ -218,7 +218,7 @@ async function runTests() {
     // ============================================================
     console.log('📍 Testing CORS Plugin...');
 
-    app.plug(NeoAPI.cors, { origin: 'http://localhost:3000' });
+    app.plug(ZyroAPI.cors, { origin: 'http://localhost:3000' });
 
     app.get('/cors-test', (req, res) => {
         res.json({ cors: 'enabled' });

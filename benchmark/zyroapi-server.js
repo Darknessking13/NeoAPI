@@ -1,9 +1,9 @@
-// neoapi-server.js
-const { NeoAPI } = require('neoapi');
+// zyroapi-server.js
+const { ZyroAPI } = require('zyroapi');
 const { MultipartParserPlugin } = require("../plugins/@neoapi-multipart-parse")
 const { serve } = require("../plugins/@neoapi-serve")
 
-const app = new NeoAPI({ verbose: false });
+const app = new ZyroAPI({ verbose: false });
 
 const PORT = process.env.PORT || 7863;
 
@@ -15,4 +15,4 @@ app.get('/', (req, res) => {
 
 app.launch(PORT);
 
-console.log('NEOAPI_READY'); 
+console.log('ZYROAPI_READY'); 

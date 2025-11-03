@@ -1,33 +1,34 @@
-# ✨ NeoAPI
+# ✨ ZyroAPI
 
-[![NPM Version](https://img.shields.io/npm/v/neoapi?style=flat-square)](https://www.npmjs.com/package/neoapi)
-[![License](https://img.shields.io/npm/l/neoapi?style=flat-square)](LICENSE)
+[![NPM Version](https://img.shields.io/npm/v/zyroapi?style=flat-square)](https://www.npmjs.com/package/zyroapi)
+[![License](https://img.shields.io/npm/l/zyroapi?style=flat-square)](LICENSE)
+[![Node Version](https://img.shields.io/node/v/zyroapi?style=flat-square)](https://nodejs.org)
 
 > **A modern, minimalist, and blazingly fast Node.js framework for building REST APIs**
 
-NeoAPI combines Express-like simplicity with modern features and impressive performance. Built with developer experience in mind, it offers clean routing, powerful plugins, and helpful utilities—without the bloat.
+ZyroAPI combines Express-like simplicity with modern features and impressive performance. Built with developer experience in mind, it offers clean routing, powerful plugins, and helpful utilities—without the bloat.
 
 ## 🚀 Performance
 
-NeoAPI delivers **production-ready performance** that rivals industry leaders:
+ZyroAPI delivers **production-ready performance** that rivals industry leaders:
 
 | Framework | Req/sec | Latency (avg) | Memory | Relative Speed |
 |-----------|---------|---------------|--------|----------------|
-| **NeoAPI** | **13,594** | **73ms** | **104 MB** | **Baseline** |
+| **ZyroAPI** | **13,594** | **73ms** | **104 MB** | **Baseline** |
 | Fastify | 17,264 | 57ms | 90 MB | +27% faster |
 | Express | 4,114 | 235ms | 118 MB | **-70% slower** |
 
 **Benchmark Details:**
 - **System:** Intel Xeon @ 2.20GHz (2 cores), 7.76 GB RAM, Node v20.11.1
 - **Test:** 40s duration, 100 connections, 10 pipelining factor
-- **NeoAPI is 3.3x faster than Express** with lower memory usage
-- **NeoAPI achieves 79% of Fastify's speed** while maintaining simpler APIs
+- **ZyroAPI is 3.3x faster than Express** with lower memory usage
+- **ZyroAPI achieves 79% of Fastify's speed** while maintaining simpler APIs
 
 *Benchmarks run on Linux 6.6.111+ using [autocannon](https://github.com/mcollina/autocannon)*
 
 ---
 
-## ✨ Why NeoAPI?
+## ✨ Why ZyroAPI?
 
 ### 🎯 **Best of Both Worlds**
 - **Express-like simplicity** - Familiar API, minimal learning curve
@@ -66,9 +67,9 @@ NeoAPI delivers **production-ready performance** that rivals industry leaders:
 ## 📦 Installation
 
 ```bash
-npm install neoapi
+npm install zyroapi
 # or
-yarn add neoapi 
+yarn add zyroapi 
 ```
 
 ---
@@ -77,17 +78,17 @@ yarn add neoapi
 
 ```javascript
 // server.js
-const { NeoAPI } = require('neoapi'); // Adjust path if needed
+const { ZyroAPI } = require('zyroapi');
 
-const app = new NeoAPI();
+const app = new ZyroAPI();
 const PORT = 3000;
 
 // Optional: Enable built-in JSON body parser plugin
-app.plug(NeoAPI.jsonParser());
+app.plug(ZyroAPI.jsonParser);
 
 // Define a simple GET route
 app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to NeoAPI!' });
+  res.json({ message: 'Welcome to ZyroAPI!' });
 });
 
 // Route with parameters
@@ -98,7 +99,7 @@ app.get('/users/:id', (req, res) => {
 
 // Start the server
 app.launch(PORT, () => {
-  console.log(`✨ NeoAPI server running at http://localhost:${PORT}`);
+  console.log(`✨ ZyroAPI server running at http://localhost:${PORT}`);
 });
 ```
 
@@ -175,10 +176,10 @@ app.get('/items/:itemId', (req, res) => {
 *   **`app.plug(pluginDefinition, options?)`**: Registers a plugin (often using built-in static methods).
     ```js
     // Enable CORS with specific options
-    app.plug(NeoAPI.cors(), { origin: 'https://myfrontend.com' });
+    app.plug(ZyroAPI.cors, { origin: 'https://myfrontend.com' });
 
     // Enable JSON body parsing
-    app.plug(NeoAPI.jsonParser(), { limit: '5mb' });
+    app.plug(ZyroAPI.jsonParser, { limit: '5mb' });
     ```
 *(See [Middleware Docs](./docs/middleware.md) & [Plugins Docs](./docs/plugins.md))*
 
@@ -239,7 +240,7 @@ The `res` object in your handlers is decorated with helpful methods:
 
 ## ⚡ Performance & Optimizations
 
-NeoAPI is built for speed with carefully optimized internals:
+ZyroAPI is built for speed with carefully optimized internals:
 
 ### 🎯 Performance Optimizations
 - **Prototype methods** - Zero per-request binding overhead
@@ -261,7 +262,7 @@ Results:
 ┌──────────┬────────────┬──────────┬─────────┬──────────┐
 │ Framework│ Req/sec    │ Latency  │ Memory  │ vs Express│
 ├──────────┼────────────┼──────────┼─────────┼──────────┤
-│ NeoAPI   │ 13,594     │ 73ms     │ 104 MB  │ +230%    │
+│ ZyroAPI  │ 13,594     │ 73ms     │ 104 MB  │ +230%    │
 │ Fastify  │ 17,264     │ 57ms     │ 90 MB   │ +320%    │
 │ Express  │ 4,114      │ 235ms    │ 118 MB  │ Baseline │
 └──────────┴────────────┴──────────┴─────────┴──────────┘
@@ -287,7 +288,7 @@ Contributions are welcome! Whether it's:
 - 📝 Documentation improvements
 - 🔧 Code contributions
 
-Please feel free to open an issue or submit a pull request on [GitHub](https://github.com/Darknessking13/NeoAPI).
+Please feel free to open an issue or submit a pull request on [GitHub](https://github.com/Darknessking13/ZyroAPI).
 
 ---
 
@@ -297,11 +298,19 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
+## 🙏 Acknowledgments
+
+- Built with [find-my-way](https://github.com/delvedor/find-my-way) for high-performance routing
+- Inspired by Express.js simplicity and Fastify performance
+- Thanks to the Node.js community
+
+---
+
 ## 📬 Support
 
 - 📖 [Documentation](./docs/)
-- 🐛 [Issue Tracker](https://github.com/Darknessking13/NeoAPI/issues)
-- 💬 [Discussions](https://github.com/Darknessking13/NeoAPI/discussions)
+- 🐛 [Issue Tracker](https://github.com/Darknessking13/ZyroAPI/issues)
+- 💬 [Discussions](https://github.com/Darknessking13/ZyroAPI/discussions)
 
 ---
 
@@ -309,6 +318,6 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 **Made with ❤️ by [I._.become_a_devil](https://github.com/Darknessking13)**
 
-⭐ Star us on [GitHub](https://github.com/Darknessking13/NeoAPI) if you find NeoAPI useful!
+⭐ Star us on [GitHub](https://github.com/Darknessking13/ZyroAPI) if you find ZyroAPI useful!
 
 </div>

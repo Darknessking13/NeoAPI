@@ -1,8 +1,8 @@
 {
-  "name": "neoapi",
+  "name": "zyroapi",
   "version": "0.0.1-preview",
   "description": "A modern, minimalist, and fast Node.js framework for REST APIs",
-  "main": "./lib/neoapi.js",
+  "main": "./lib/zyroapi.js",
   "files": [
     "lib/",
     "docs/",
@@ -11,7 +11,7 @@
     "CHANGELOG.md"
   ],
   "exports": {
-    ".": "./lib/neoapi.js",
+    ".": "./lib/zyroapi.js",
     "./plugins": "./lib/plugins/index.js",
     "./plugins/json": "./lib/plugins/jsonParser.js",
     "./plugins/cors": "./lib/plugins/cors.js",
@@ -35,10 +35,10 @@
     "type-is": "^1.6.18"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   },
   "keywords": [
-    "neoapi",
+    "zyroapi",
     "rest",
     "api",
     "framework",
