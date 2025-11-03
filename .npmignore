@@ -11,6 +11,8 @@
 !CHANGELOG.md
 !package.json
 
+!docs-server/
+
 # Development and Testing
 test/
 tests/
