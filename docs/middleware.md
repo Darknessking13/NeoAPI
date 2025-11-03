@@ -36,7 +36,7 @@ app.attach((req, res, next) => {
 
 // 2. Adding a Custom Header
 app.attach((req, res, next) => {
-  res.setHeader('X-Powered-By', 'NeoAPI');
+  res.setHeader('X-Powered-By', 'ZyroAPI');
   next();
 });
 
@@ -73,6 +73,6 @@ app.get('/protected', (req, res) => {
 
 ## Error Handling Middleware
 
-NeoAPI uses a single global error handler registered via `app.error()`. While some frameworks have specific error middleware signatures, in NeoAPI, you trigger the global handler by calling `next(err)` from any regular middleware or route handler.
+ZyroAPI uses a single global error handler registered via `app.error()`. While some frameworks have specific error middleware signatures, in ZyroAPI, you trigger the global handler by calling `next(err)` from any regular middleware or route handler.
 
 See the [Error Handling Guide](./error-handling.md) for details.

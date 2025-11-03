@@ -1,24 +1,24 @@
-# How to Create NeoAPI Plugins
+# How to Create ZyroAPI Plugins
 
-NeoAPI's plugin system allows you to extend its core functionality in a structured and reusable way. You can encapsulate features like middleware, route handlers, helper functions, or integrations with external services into standalone plugins.
+ZyroAPI's plugin system allows you to extend its core functionality in a structured and reusable way. You can encapsulate features like middleware, route handlers, helper functions, or integrations with external services into standalone plugins.
 
-This guide covers the process of creating a class-based plugin for NeoAPI, including how to interact with the application's lifecycle hooks.
+This guide covers the process of creating a class-based plugin for ZyroAPI, including how to interact with the application's lifecycle hooks.
 
 ## Prerequisites
 
 *   Understanding of Node.js, JavaScript classes, and asynchronous programming (`async`/`await`).
-*   Familiarity with the core NeoAPI concepts (application instance, middleware, routing).
-*   NeoAPI framework installed in your development environment or main project (`npm install neoapi`).
+*   Familiarity with the core ZyroAPI concepts (application instance, middleware, routing).
+*   ZyroAPI framework installed in your development environment or main project (`npm install ZyroAPI`).
 
 ## Core Concepts
 
-*   **Plugin Class:** Plugins are defined as JavaScript classes that extend the base `Plugin` class provided by NeoAPI.
-*   **`BasePlugin`:** Imported via `require('neoapi/plugins')`. Provides essential structure, options handling, and a standardized logger.
+*   **Plugin Class:** Plugins are defined as JavaScript classes that extend the base `Plugin` class provided by ZyroAPI.
+*   **`BasePlugin`:** Imported via `require('ZyroAPI/plugins')`. Provides essential structure, options handling, and a standardized logger.
 *   **`static name`:** Each plugin class **must** define a unique `static name` property (string, PascalCase recommended) used for identification and logging.
-*   **`load(app)` Method:** The **required** entry point for your plugin's logic. NeoAPI calls this method after instantiating your plugin, passing the `app` instance. Use this method to integrate your plugin (e.g., attach middleware, add routes, **register hooks**).
+*   **`load(app)` Method:** The **required** entry point for your plugin's logic. ZyroAPI calls this method after instantiating your plugin, passing the `app` instance. Use this method to integrate your plugin (e.g., attach middleware, add routes, **register hooks**).
 *   **`app.plug()`:** The method used in your main application (`server.js`) to register and load a plugin class.
-*   **Standalone Packages:** Plugins are typically developed as separate npm packages (e.g., `@neoapi/my-plugin`) for better modularity and distribution. They declare `neoapi` as a `peerDependency`.
-*   **Lifecycle Hooks (`app.addHook`):** NeoAPI provides hooks into various points of the application and request lifecycle. Plugins can register functions to run at these points using `app.addHook()`.
+*   **Standalone Packages:** Plugins are typically developed as separate npm packages (e.g., `@ZyroAPI/my-plugin`) for better modularity and distribution. They declare `ZyroAPI` as a `peerDependency`.
+*   **Lifecycle Hooks (`app.addHook`):** ZyroAPI provides hooks into various points of the application and request lifecycle. Plugins can register functions to run at these points using `app.addHook()`.
 
 ## 📚 Table of Contents
 - [Prerequisites](#prerequisites)
@@ -39,10 +39,10 @@ Let's enhance the simple request timing plugin example to use lifecycle hooks.
 **2. Define the Plugin Class (`lib/requestTimerPlugin.js`)**
 
 ```javascript
-// neoapi-request-timer/lib/requestTimerPlugin.js
+// ZyroAPI-request-timer/lib/requestTimerPlugin.js
 'use strict';
 
-const { Plugin } = require('neoapi/plugins');
+const { Plugin } = require('ZyroAPI/plugins');
 const { performance } = require('perf_hooks'); // Use performance hooks for high-res timing
 
 class RequestTimerPlugin extends Plugin {
@@ -62,7 +62,7 @@ class RequestTimerPlugin extends Plugin {
 
     /**
      * REQUIRED: Load method. Integrates the plugin with the app.
-     * @param {NeoAPI} app - The NeoAPI application instance.
+     * @param {ZyroAPI} app - The ZyroAPI application instance.
      */
     load(app) {
         this.app = app; // REQUIRED for this.log and app methods
@@ -87,7 +87,7 @@ class RequestTimerPlugin extends Plugin {
      * @async - Hooks can be async, even if this one isn't strictly.
      */
     async captureStartTime(req, res) {
-        // req.id is automatically added by NeoAPI core (if using the updated core)
+        // req.id is automatically added by ZyroAPI core (if using the updated core)
         if (req.id) {
             // Use performance.now() for monotonic clock
             this.requestStartTimes.set(req.id, performance.now());
@@ -157,18 +157,18 @@ module.exports = { RequestTimerPlugin };
 
 **3. Export from Package Entry Point (`index.js`)** - *Remains the same*
 
-**4. Using Your Plugin in a NeoAPI App** - *Remains the same*
+**4. Using Your Plugin in a ZyroAPI App** - *Remains the same*
 
 ## Plugin API & Available Methods
 
 When extending `Plugin`, your class instance has access to:
 
 *   `this.options`: Merged configuration object.
-*   `this.app`: The main `NeoAPI` application instance (set *before* `load()` is called).
+*   `this.app`: The main `ZyroAPI` application instance (set *before* `load()` is called).
 *   `this.log`: Standardized logger instance (use *after* `this.app` is set). Methods: `info`, `warn`, `error`, `success`, `debug`.
 *   `this.name`: Instance name.
 
-**Within the `load(app)` method (and other methods where `this.app` is available), you can use standard NeoAPI methods, including:**
+**Within the `load(app)` method (and other methods where `this.app` is available), you can use standard ZyroAPI methods, including:**
 
 *   **`app.addHook(hookName, handlerFn)`:** Register functions to run at specific application lifecycle points (see next section).
 *   `app.attach(middlewareFn)`: Register global middleware.
@@ -221,7 +221,7 @@ class MyPlugin extends Plugin {
 **Important:**
 
 *   **Binding `this`:** If using class methods as handlers, use `.bind(this)` to ensure the correct context.
-*   **`async`:** Hook handlers can be `async`. NeoAPI will `await` them.
+*   **`async`:** Hook handlers can be `async`. ZyroAPI will `await` them.
 *   **Error Handling:** Errors thrown *within* a hook handler will typically stop the execution of subsequent handlers for that hook and may propagate to the main error handler (depending on the hook). Handle errors gracefully within your hook if possible.
 *   **Performance:** Keep hook handlers efficient, especially those on the request/response path (`onRequest`, `preHandler`, `onResponse`).
 
@@ -240,7 +240,7 @@ This is suitable when you want to provide specific, well-defined extension point
 
 ```javascript
 // --- Plugin Definition ---
-const { Plugin } = require('neoapi/plugins');
+const { Plugin } = require('ZyroAPI/plugins');
 // const { connectToDb } = require('./db-utils'); // Your DB logic
 
 class DatabasePlugin extends Plugin {
@@ -283,7 +283,7 @@ class DatabasePlugin extends Plugin {
 
 // --- User Application (server.js) ---
 // const { DatabasePlugin } = require('./plugins/database');
-// const app = new NeoAPI();
+// const app = new ZyroAPI();
 
 // app.plug(DatabasePlugin, {
 //     url: 'your_db_connection_string',
@@ -307,7 +307,7 @@ This pattern is better for notifying users about events that have occurred, espe
 
 ```javascript
 // --- Plugin Definition ---
-const { Plugin } = require('neoapi/plugins');
+const { Plugin } = require('ZyroAPI/plugins');
 
 class AuthPlugin extends Plugin {
     static name = 'Auth';
@@ -337,7 +337,7 @@ class AuthPlugin extends Plugin {
 
 // --- User Application (server.js) ---
 // const { AuthPlugin } = require('./plugins/auth');
-// const app = new NeoAPI();
+// const app = new ZyroAPI();
 // app.plug(AuthPlugin);
 
 // // User listens for events emitted by the plugin
@@ -364,7 +364,7 @@ class AuthPlugin extends Plugin {
 ## Plugin Best Practices
 
 *   **Clear Purpose:** Design plugins with a specific, well-defined purpose.
-*   **Use `peerDependencies`:** Declare `neoapi` as a peer dependency.
+*   **Use `peerDependencies`:** Declare `ZyroAPI` as a peer dependency.
 *   **Extend `Plugin`:** Always extend the base `Plugin` class.
 *   **Implement `static name`:** Provide a unique, descriptive static name.
 *   **Implement `load(app)`:** Perform integration logic within `load`.
@@ -381,4 +381,4 @@ class AuthPlugin extends Plugin {
     *   Provide clear ways for users to interact (options callbacks or emitted events).
     *   Use clear, namespaced event names (e.g., `myplugin:event`).
 
-By following these guidelines, you can create powerful, reusable, and well-integrated plugins for the NeoAPI ecosystem.
+By following these guidelines, you can create powerful, reusable, and well-integrated plugins for the ZyroAPI ecosystem.

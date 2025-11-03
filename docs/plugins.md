@@ -1,36 +1,36 @@
 # Plugins
 
-Plugins provide a structured way to extend NeoAPI's functionality, often by registering middleware, adding routes, or integrating other services. NeoAPI uses a class-based system for plugins, promoting organization and reusability.
+Plugins provide a structured way to extend ZyroAPI's functionality, often by registering middleware, adding routes, or integrating other services. ZyroAPI uses a class-based system for plugins, promoting organization and reusability.
 
 ## Using Plugins
 
-Plugins are registered using the `app.plug()` method. You typically pass the **Plugin Class** itself (often obtained via static getters like `NeoAPI.jsonParser`) as the first argument and any configuration options as the second argument.
+Plugins are registered using the `app.plug()` method. You typically pass the **Plugin Class** itself (often obtained via static getters like `ZyroAPI.jsonParser`) as the first argument and any configuration options as the second argument.
 
 ```javascript
-const { NeoAPI } = require('neoapi'); // Assuming installed via npm
-const app = new NeoAPI();
+const { ZyroAPI } = require('ZyroAPI'); // Assuming installed via npm
+const app = new ZyroAPI();
 
 // Syntax: app.plug(PluginClass, options?)
 
 // Example: Enable JSON body parsing with a 5MB limit
-// Note: We pass the Class NeoAPI.jsonParser directly, NOT NeoAPI.jsonParser()
-app.plug(NeoAPI.jsonParser, { limit: '5mb' });
+// Note: We pass the Class ZyroAPI.jsonParser directly, NOT ZyroAPI.jsonParser()
+app.plug(ZyroAPI.jsonParser, { limit: '5mb' });
 
 // Example: Enable CORS, allowing requests only from a specific origin
-app.plug(NeoAPI.cors, { origin: 'https://example.com' });
+app.plug(ZyroAPI.cors, { origin: 'https://example.com' });
 
 // Example: Using a custom plugin class
 // const { MyCustomPlugin } = require('./plugins/my-custom-plugin');
 // app.plug(MyCustomPlugin, { customOption: true });
 ```
 
-NeoAPI handles instantiating the plugin class with the provided options and calling its `load` method.
+ZyroAPI handles instantiating the plugin class with the provided options and calling its `load` method.
 
 ## Built-in Plugins
 
-NeoAPI includes some essential plugins accessible via static getters on the `NeoAPI` class. These getters return the respective **Plugin Class**.
+ZyroAPI includes some essential plugins accessible via static getters on the `ZyroAPI` class. These getters return the respective **Plugin Class**.
 
-### `NeoAPI.jsonParser`
+### `ZyroAPI.jsonParser`
 
 Returns the `JsonParserPlugin` class. This plugin registers middleware to parse incoming request bodies with `Content-Type: application/json`. The parsed body (an object or array) will be available on `req.body`.
 
@@ -44,10 +44,10 @@ Returns the `JsonParserPlugin` class. This plugin registers middleware to parse 
 
 ```javascript
 // Default options (1mb limit, strict)
-app.plug(NeoAPI.jsonParser);
+app.plug(ZyroAPI.jsonParser);
 
 // Custom limit, non-strict
-app.plug(NeoAPI.jsonParser, { limit: '200kb', strict: false });
+app.plug(ZyroAPI.jsonParser, { limit: '200kb', strict: false });
 
 // Use after registering the plugin
 app.post('/data', (req, res) => {
@@ -58,7 +58,7 @@ app.post('/data', (req, res) => {
 ```
 If the body is invalid JSON or exceeds the size limit, an appropriate error (e.g., 400 Bad Request, 413 Payload Too Large) will be passed to the global error handler.
 
-### `NeoAPI.cors`
+### `ZyroAPI.cors`
 
 Returns the `CorsPlugin` class. This plugin registers middleware to handle Cross-Origin Resource Sharing (CORS) headers, enabling requests from different origins (domains).
 
@@ -76,7 +76,7 @@ Returns the `CorsPlugin` class. This plugin registers middleware to handle Cross
 
 ```javascript
 // Allow only specific frontend origin, allow credentials
-app.plug(NeoAPI.cors, {
+app.plug(ZyroAPI.cors, {
   origin: 'https://my-frontend-app.com',
   credentials: true,
 });
@@ -88,10 +88,10 @@ Creating your own plugins allows you to encapsulate reusable logic like database
 
 **Steps:**
 
-1.  **Import the Base Class:** You need the base `Plugin` class provided by NeoAPI.
+1.  **Import the Base Class:** You need the base `Plugin` class provided by ZyroAPI.
     ```javascript
     // In your plugin file (e.g., lib/plugins/myCustomPlugin.js)
-    const { Plugin } = require('neoapi/plugins'); // Assuming 'neoapi' is your package name or correct relative path
+    const { Plugin } = require('ZyroAPI/plugins'); // Assuming 'ZyroAPI' is your package name or correct relative path
     ```
 
 2.  **Define Your Class:** Create a class that extends `Plugin`.
@@ -125,7 +125,7 @@ Creating your own plugins allows you to encapsulate reusable logic like database
     }
     ```
 
-5.  **Implement `load(app)`:** This method is **required**. It's called by NeoAPI after the plugin is instantiated. This is where you integrate with the app:
+5.  **Implement `load(app)`:** This method is **required**. It's called by ZyroAPI after the plugin is instantiated. This is where you integrate with the app:
     *   The `app` instance is passed as an argument.
     *   Store the `app` instance on `this.app` to enable `this.log`.
     *   Use `app.attach()` to add middleware.
@@ -162,15 +162,15 @@ Creating your own plugins allows you to encapsulate reusable logic like database
     }
     ```
 
-6.  **Use `this.log`:** The base `Plugin` class provides a standardized logger accessible via `this.log` (once `this.app` is set in `load`). It has methods like `info`, `warn`, `error`, `success`, `debug`. These logs are emitted as events and handled by NeoAPI's default log listener, ensuring consistent formatting.
+6.  **Use `this.log`:** The base `Plugin` class provides a standardized logger accessible via `this.log` (once `this.app` is set in `load`). It has methods like `info`, `warn`, `error`, `success`, `debug`. These logs are emitted as events and handled by ZyroAPI's default log listener, ensuring consistent formatting.
 
-7.  **(Optional) Implement `unload()`:** Define an `unload()` method for cleanup logic (e.g., closing database connections) if your plugin holds persistent resources. Note: NeoAPI's basic `plug` system doesn't automatically call `unload` currently, but it's good practice for potential future enhancements or manual management.
+7.  **(Optional) Implement `unload()`:** Define an `unload()` method for cleanup logic (e.g., closing database connections) if your plugin holds persistent resources. Note: ZyroAPI's basic `plug` system doesn't automatically call `unload` currently, but it's good practice for potential future enhancements or manual management.
 
 **Complete Custom Plugin Example:**
 
 ```javascript
 // lib/plugins/databaseConnector.js
-const { Plugin } = require('neoapi/plugins');
+const { Plugin } = require('ZyroAPI/plugins');
 // const { connectToDatabase, disconnectDatabase } = require('../db/utils'); // Your DB connection logic
 
 class DatabaseConnectorPlugin extends Plugin {

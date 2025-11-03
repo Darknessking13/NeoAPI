@@ -1,6 +1,6 @@
 # Response Utilities
 
-NeoAPI enhances the standard Node.js `http.ServerResponse` object (passed as `res` to your handlers) with several convenient helper methods for sending responses to the client.
+ZyroAPI enhances the standard Node.js `http.ServerResponse` object (passed as `res` to your handlers) with several convenient helper methods for sending responses to the client.
 
 Using these helpers often makes your code cleaner and less prone to errors related to setting headers manually. Methods are chainable unless they explicitly end the response (like `send`, `json`, `sendStatus`, `redirect`, `sendFile`).
 
@@ -85,7 +85,7 @@ app.get('/docs', (req, res) => {
 
 ### `res.end(data?)`
 
-The low-level Node.js method to finish the response. You should generally prefer the higher-level NeoAPI helpers (`send`, `json`, etc.). Use `res.end()` only if you are manually piping streams or need very fine-grained control over the response finalization. NeoAPI's sending methods call `res.end()` internally.
+The low-level Node.js method to finish the response. You should generally prefer the higher-level ZyroAPI helpers (`send`, `json`, etc.). Use `res.end()` only if you are manually piping streams or need very fine-grained control over the response finalization. ZyroAPI's sending methods call `res.end()` internally.
 
 ## Setting Status & Headers (Chainable)
 

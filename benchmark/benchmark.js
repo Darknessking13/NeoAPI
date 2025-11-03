@@ -10,12 +10,12 @@ const fs = require('fs');
 // --- Configuration ---
 const servers = [
     {
-        name: 'NeoAPI',
+        name: 'ZyroAPI',
         // *** Ensure paths are correct relative to where benchmark.js is run ***
-        file: './benchmark/neoapi-server.js', // Example: If benchmark.js is in root
+        file: './benchmark/zyroapi-server.js', // Example: If benchmark.js is in root
         // file: '../server.js', // Example: If benchmark.js is in benchmark/ subdir
         port: 7863,
-        readySignal: 'NEOAPI_READY',
+        readySignal: 'ZYROAPI_READY',
     },
     {
         name: 'Fastify',

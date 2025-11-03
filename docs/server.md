@@ -1,10 +1,10 @@
 # Server Control
 
-NeoAPI provides a simple method to create and start the underlying Node.js HTTP server.
+ZyroAPI provides a simple method to create and start the underlying Node.js HTTP server.
 
 ## `app.launch(port, [callback])`
 
-This is the primary method to start your NeoAPI application, making it listen for incoming HTTP requests.
+This is the primary method to start your ZyroAPI application, making it listen for incoming HTTP requests.
 
 **Arguments:**
 
@@ -18,8 +18,8 @@ This is the primary method to start your NeoAPI application, making it listen fo
 **Example:**
 
 ```javascript
-const { NeoAPI } = require('neoapi');
-const app = new NeoAPI();
+const { ZyroAPI } = require('ZyroAPI');
+const app = new ZyroAPI();
 const PORT = 3000;
 
 // Basic usage
@@ -28,7 +28,7 @@ app.launch(PORT); // Logs a default message
 // Usage with a callback
 app.launch(PORT, () => {
   console.log('------------------------------------');
-  console.log(` NeoAPI App is Live! `);
+  console.log(` ZyroAPI App is Live! `);
   console.log(` Listening on: http://localhost:${PORT} `);
   console.log('------------------------------------');
 });

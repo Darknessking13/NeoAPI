@@ -43,7 +43,6 @@ foreach ($file in $filesToUpdate) {
                 -replace 'NeoAPI', 'ZyroAPI' `
                 -replace 'neoapi', 'zyroapi' `
                 -replace 'NEOAPI', 'ZYROAPI' `
-                -replace 'neoapi-server\.js', 'zyroapi-server.js'
             
             if ($content -ne $newContent) {
                 Set-Content $fullPath $newContent -NoNewline

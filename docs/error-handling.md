@@ -1,6 +1,6 @@
 # Error Handling
 
-Robust error handling is crucial for building reliable APIs. NeoAPI provides a centralized mechanism to catch and process errors that occur during request processing.
+Robust error handling is crucial for building reliable APIs. ZyroAPI provides a centralized mechanism to catch and process errors that occur during request processing.
 
 ## The Error Flow
 
@@ -8,15 +8,15 @@ Errors can originate from several places:
 
 1.  **Middleware:** A middleware function calls `next(err)`.
 2.  **Route Handler:** A route handler throws an error (synchronously or by rejecting an async promise).
-3.  **NeoAPI Internals:** An error occurs within NeoAPI itself (e.g., failed URL parsing, plugin error).
+3.  **ZyroAPI Internals:** An error occurs within ZyroAPI itself (e.g., failed URL parsing, plugin error).
 4.  **Not Found:** No route matches the incoming request (triggers a 404 error internally).
 5.  **Plugin Errors:** A plugin (like the JSON parser) encounters an error (e.g., invalid JSON, payload too large) and calls `next(err)`.
 
-When an error occurs and is passed to `next(err)` or thrown/rejected uncaught in a handler, NeoAPI stops the regular request flow and immediately invokes the **registered global error handler**.
+When an error occurs and is passed to `next(err)` or thrown/rejected uncaught in a handler, ZyroAPI stops the regular request flow and immediately invokes the **registered global error handler**.
 
 ## Registering an Error Handler
 
-Use `app.error(handlerFn)` to register your custom error handling function. This replaces the default NeoAPI error handler.
+Use `app.error(handlerFn)` to register your custom error handling function. This replaces the default ZyroAPI error handler.
 
 **Handler Function Signature:** `(err, req, res) => void`
 
@@ -66,7 +66,7 @@ app.error((err, req, res) => {
 
 ## Default Error Handler
 
-If you don't register a custom handler with `app.error()`, NeoAPI uses a default handler that:
+If you don't register a custom handler with `app.error()`, ZyroAPI uses a default handler that:
 
 *   Logs the error stack to the console (except for 404s).
 *   Determines an appropriate status code (using `err.statusCode` or defaulting to 500).

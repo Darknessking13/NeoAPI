@@ -1,6 +1,6 @@
 # Routing
 
-Routing determines how NeoAPI responds to client requests based on the URL path and HTTP method. NeoAPI uses the fast `find-my-way` router.
+Routing determines how ZyroAPI responds to client requests based on the URL path and HTTP method. ZyroAPI uses the fast `find-my-way` router.
 
 ## Basic Routing
 
@@ -59,7 +59,7 @@ app.get('/orders/:year/:invoiceId', (req, res) => {
 
 ## Query Parameters
 
-Access URL query parameters (e.g., `/search?q=neoapi&limit=10`) through the `req.query` object.
+Access URL query parameters (e.g., `/search?q=ZyroAPI&limit=10`) through the `req.query` object.
 
 ```javascript
 // GET /search?q=frameworks&sort=name
@@ -93,10 +93,10 @@ app.get('/files/*', (req, res) => {
 
 ## `find-my-way` Options
 
-You can pass `find-my-way` router options during `NeoAPI` instantiation:
+You can pass `find-my-way` router options during `ZyroAPI` instantiation:
 
 ```javascript
-const app = new NeoAPI({
+const app = new ZyroAPI({
   ignoreTrailingSlash: true, // Default: true
   // caseSensitive: false,   // Default: true (find-my-way default)
 });

@@ -1,6 +1,6 @@
-# Getting Started with NeoAPI
+# Getting Started with ZyroAPI
 
-This guide will walk you through installing NeoAPI and creating your first simple application.
+This guide will walk you through installing ZyroAPI and creating your first simple application.
 
 ## Installation
 
@@ -9,15 +9,15 @@ First, ensure you have Node.js (version 14 or higher recommended) and npm instal
 Create a new project directory and initialize npm:
 
 ```bash
-mkdir my-neoapi-app
-cd my-neoapi-app
+mkdir my-ZyroAPI-app
+cd my-ZyroAPI-app
 npm init -y
 ```
 
-Install NeoAPI and its required peer dependencies:
+Install ZyroAPI and its required peer dependencies:
 
 ```bash
-npm install neoapi 
+npm install ZyroAPI 
 ```
 
 ## Your First App
@@ -26,15 +26,15 @@ Create a file named `server.js` (or your preferred entry point name) in your pro
 
 ```javascript
 // server.js
-const { NeoAPI } = require('neoapi'); 
+const { ZyroAPI } = require('ZyroAPI'); 
 
-const app = new NeoAPI();
+const app = new ZyroAPI();
 const PORT = process.env.PORT || 3000;
 
 // Define a route for the root path '/'
 app.get('/', (req, res) => {
   // Use the res.json() helper to send a JSON response
-  res.json({ message: 'Hello from NeoAPI!' });
+  res.json({ message: 'Hello from ZyroAPI!' });
 });
 
 // Define another simple route
@@ -60,10 +60,10 @@ node server.js
 
 You should see the confirmation message in your console. You can now access the routes in your browser or using a tool like `curl`:
 
-*   `http://localhost:3000/` -> Returns `{"message":"Hello from NeoAPI!"}`
+*   `http://localhost:3000/` -> Returns `{"message":"Hello from ZyroAPI!"}`
 *   `http://localhost:3000/about` -> Returns `This is the About page.`
 
-Congratulations! You've created and run your first NeoAPI application.
+Congratulations! You've created and run your first ZyroAPI application.
 
 ## Next Steps
 

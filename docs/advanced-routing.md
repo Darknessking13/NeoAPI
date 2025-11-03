@@ -1,6 +1,6 @@
 # Advanced Routing
 
-Beyond basic routes, NeoAPI offers tools to organize your routes and handle complex scenarios.
+Beyond basic routes, ZyroAPI offers tools to organize your routes and handle complex scenarios.
 
 ## Grouping Routes (`app.group`)
 
@@ -110,7 +110,7 @@ app.get('/dashboard', app.parallel([
 
 // When a GET request is made to /dashboard:
 // 1. fetchUserProfile, fetchRecentOrders, fetchNotifications run concurrently.
-// 2. NeoAPI waits for all three to finish.
+// 2. ZyroAPI waits for all three to finish.
 // 3. The results are merged:
 //    {
 //      profile: { name: 'Alice', email: 'alice@example.com' },
